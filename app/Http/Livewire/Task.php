@@ -8,6 +8,7 @@ use Auth;
 use App\Models\TaskDb;
 use Log;
 use App\Models\Util;
+use App\Models\Validate;
 use DB;
 
 class Task extends Component
@@ -24,9 +25,8 @@ class Task extends Component
      */
     public function render()
     {
-        //Log::info($this->data);
         //return view('livewire.task',['data1' => TaskDb::paginate(2, ['*'], 'page', 1),'mydate' => date("i:s")]);
-        return view('livewire.task',['data' => TaskDb::paginate($this->pagination_limit)]);
+        return view('livewire.task',['data' => TaskDb::orderBy('id', 'desc')->paginate($this->pagination_limit)]);
         //return view('livewire.task');
     }
      /**
@@ -69,12 +69,9 @@ class Task extends Component
 
 		 try {
             Log::info('validating task...'.$this->due_date);
+            
             // Validate task input details
-			$this->validate([
-				'task' => 'required|min:5',
-                'due_date' => 'required',
-                'due_hours' => 'required|string',
-			]);
+            Validate::task_validate($this);
 
 			TaskDb::create([
                 'task' => $this->task,
@@ -85,7 +82,7 @@ class Task extends Component
 			]);
 		
 			$this->resetForm();
-            $this->showAlert('Task created successfully');
+            Util::showAlert($this,'Task created successfully');
            // $this->paginate(1);
             //$this->dispatchBrowserEvent('closeModal');
                
@@ -95,7 +92,7 @@ class Task extends Component
 			}
     }
      /**
-     *  Populating Edit form for Task
+     *  Populating Edit form with existing data
      *
      * @return void
      */
@@ -120,11 +117,7 @@ class Task extends Component
     {
 		 try {
             // Validate task input details
-			$this->validate([
-				'task' => 'required|min:1',
-                'due_date' => 'required',
-                'due_hours' => 'required|string',
-			]);
+			Validate::task_validate($this);
             if ($this->edit_id) {
 				$record = TaskDb::find($this->edit_id);
                 $record->update([
@@ -134,10 +127,8 @@ class Task extends Component
                     'updated_by' => 'User',
 		    	]);
                 $this->resetForm();
-				$this->showAlert('Task updated successfully...!');
-				//$this->data = TaskDb::all();
-                $this->paginate(1);
-                //$this->dispatchBrowserEvent('closeModal');
+				Util::showAlert($this,'Task updated successfully...!');
+				
             }
     
 			} catch (\Illuminate\Database\QueryException $e) {
@@ -159,8 +150,6 @@ class Task extends Component
        // $this->pagination_total = 
       // $this->data = $pagination->items();
        // $this->pagination_links = $pagination->links();
-        Log::info($this->data);
-
     }
     /**
      *  Change status of the Task
@@ -178,7 +167,7 @@ class Task extends Component
                     'updated_by' => 'User',
 		    	]);
                 $this->resetForm();
-				$this->showAlert('Task status changed successfully...!');
+				Util::showAlert($this,'Task status changed successfully...!');
             }
     
 			} catch (\Illuminate\Database\QueryException $e) {
@@ -220,18 +209,10 @@ class Task extends Component
 		$this->resetValidation();
     }
     public function closeNotification() {
-        $this->alert_modal = 0;
-        $this->alert_content = "";
+       // $this->alert_modal = 0;
+       // $this->alert_content = "";
+       Util::closeNotification($this);
     }
-     /**
-     * Display the alert box with response message
-     *
-     * @var array
-     */
-    public  function showAlert($msg){
-        $this->alert_modal=1;
-        $this->alert_content = $msg;
-		$this->dispatchBrowserEvent('closeModal');
-	}
+    
 	
 }

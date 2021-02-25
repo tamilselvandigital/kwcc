@@ -2,12 +2,12 @@
 @if (isset($alert_modal) &&  $alert_modal== 1)
 <div id="notify_box" class="fixed z-50 inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
     
-    <div class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
+    <div class="max-w-sm w-full bg-green-200 shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
       <div class="p-4">
         <div class="flex items-start">
           <div class="flex-shrink-0">
             <!-- Heroicon name: outline/check-circle -->
-            <svg class="h-6 w-6 text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <svg class="h-6 w-6 text-white-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
@@ -39,7 +39,8 @@
       console.log("closing modal");
       window.setTimeout(function() {
           console.log("here");
-          @this.alert_modal = 0
+        //  @this.alert_modal = 0
+        @this.closeNotification();
         },2000);
      })
     </script>

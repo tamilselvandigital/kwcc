@@ -2,17 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\TaskDb;
+use App\Models\HistoryDb;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TaskDbFactory extends Factory
+class HistoryDbFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = TaskDb::class;
+    protected $model = HistoryDb::class;
 
     /**
      * Define the model's default state.
@@ -22,8 +22,9 @@ class TaskDbFactory extends Factory
     public function definition()
     {
         return [
-             'task' => $this->faker->text,
-             'due_date' => $this->faker->datetime,
+            'title' => $this->faker->name,
+            'description' => $this->faker->text,
+             'event_date' => $this->faker->date,
              'status' => 'NEW'
         ];
     }

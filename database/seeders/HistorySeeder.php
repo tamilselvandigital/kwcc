@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class TaskSeeder extends Seeder
+class HistorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,9 +13,10 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('task')->insert([
-            'task' => Str::random(10),
-            'due_date' => date("Y-m-d H:i:s"),
+        DB::table('history')->insert([
+            'title' => Str::random(10),
+            'description' => Str::random(80),
+            'event_date' => date("Y-m-d"),
             'status' => 'NEW',
         ]);
     }

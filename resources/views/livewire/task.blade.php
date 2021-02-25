@@ -1,4 +1,5 @@
 <div class="min-h-screen bg-gray-100">
+  
     <div>
       @if($error || count($errors) > 0)
       <div class="rounded-md bg-red-50 p-4 alert">
@@ -65,17 +66,18 @@
               </svg>
               </div>
               <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                <div>
-                  <p class="text-sm font-medium text-indigo-600 truncate" >Edit</p>
+                <div class="w-full">
+                 
                   <p class="mt-2 flex items-center text-sm text-gray-500">
                    
                    
                     <span class="truncate">{{ $row->task }}</span>
                   </p>
+                  <p class="text-sm font-medium text-indigo-600 truncate" >Edit</p>
                 </div>
-                <div class="hidden md:block">
-                  <div>
-                    <p class="text-sm text-gray-900">
+                <div class=" md:block">
+                  <div class="w-42">
+                    <p class="text-gray-900 text-xs">
                       Due on
                       <time datetime="2020-01-07" @if($row->due_date<date('Y-m-d H:i')) class='text-red-900' @else class='text-green-900' @endif >{{ date("d M, Y",strtotime($row->due_date)) }}</time>
                     </p>

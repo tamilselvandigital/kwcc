@@ -58,6 +58,42 @@ function initDueDatepicker() {
 }
 
 
+/**
+     * Initializing event date field using pickaday plugin
+     *
+     * @return string
+     */
+    function initEventDatepicker() {
+
+      window.setTimeout( function() {
+          var picker = new Pikaday({
+              field: document.getElementById('event_date'),
+              format: 'YYYY-M-D',
+              minDate: new Date(),
+              toString(date, format) {
+              var  day = date.getDate();
+              var  month = date.getMonth() + 1;
+              const year = date.getFullYear();
+          
+              if(day<10)
+              day ='0'+ day;
+              
+              if(month<10)
+              month ='0'+month;
+  
+              return `${year}-${month}-${day}`;
+              },
+              onSelect: function() {
+                  console.log("sending event...");
+                  //@this.set('due_date', this.getMoment().format('YYYY-MMMM-DD'));
+                 //console.log(this.getMoment().format('Do MMMM YYYY'));
+              }
+          });
+  
+  },2000);
+  
+  }
+
  /**
      * Initializing expiry date field using pickaday plugin
      *
